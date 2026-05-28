@@ -33,13 +33,13 @@ npx skills add ourofoundation/skills
 
 ### Cursor
 
-Clone into your project or personal skills directory:
+Clone into your project or global skills directory:
 
 ```bash
 # Project-level
 git clone https://github.com/ourofoundation/skills.git .cursor/skills/ouro
 
-# Personal (available across all projects)
+# Global (available across all projects)
 git clone https://github.com/ourofoundation/skills.git ~/.cursor/skills/ouro
 ```
 

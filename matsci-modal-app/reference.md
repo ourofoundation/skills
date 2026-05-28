@@ -108,8 +108,7 @@ def serve():
     )
     @ouro_field("x-ouro-input-asset-type", "file")
     @ouro_field("x-ouro-input-file-extension", "cif")
-    @ouro_field("x-ouro-output-asset-type", "file")
-    @ouro_field("x-ouro-output-file-extension", "cif")
+    @ouro_field("x-ouro-output-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})
     async def predict(
         request: PredictRequest,
         ouro_route_id: Optional[str] = Header(None, alias="ouro-route-id"),
@@ -423,16 +422,16 @@ class HeavyCompute:
 
 ## Common File Extensions in Materials Science
 
-| Extension | MIME Type | Description |
-|-----------|-----------|-------------|
-| `.cif` | `text/cif` or `application/cif` | Crystallographic Information File |
-| `.poscar` / `.vasp` | `text/plain` | VASP structure format |
-| `.xyz` / `.extxyz` | `text/plain` | Atomic coordinates |
-| `.json` | `application/json` | Structured results |
-| `.zip` | `application/zip` | Multiple output files |
-| `.html` | `text/html` | Interactive visualizations |
-| `.csv` | `text/csv` | Tabular data |
-| `.traj` | `application/octet-stream` | ASE trajectory |
+| Extension           | MIME Type                       | Description                       |
+| ------------------- | ------------------------------- | --------------------------------- |
+| `.cif`              | `text/cif` or `application/cif` | Crystallographic Information File |
+| `.poscar` / `.vasp` | `text/plain`                    | VASP structure format             |
+| `.xyz` / `.extxyz`  | `text/plain`                    | Atomic coordinates                |
+| `.json`             | `application/json`              | Structured results                |
+| `.zip`              | `application/zip`               | Multiple output files             |
+| `.html`             | `text/html`                     | Interactive visualizations        |
+| `.csv`              | `text/csv`                      | Tabular data                      |
+| `.traj`             | `application/octet-stream`      | ASE trajectory                    |
 
 ## Modal Deployment Commands
 

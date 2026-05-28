@@ -20,12 +20,14 @@ Search the web for recent open-source AI models in materials science. Focus on:
 - **Inverse design** (conditional generation, optimization)
 
 Prioritize models that have:
+
 1. Published source code on GitHub
 2. Released pretrained model weights (HuggingFace, Zenodo, or repo)
 3. A clear inference API or CLI
 4. A recent paper (last ~2 years)
 
 Good search queries:
+
 - `"materials science" AI model open source 2025 2026 github`
 - `crystal structure generation model weights released`
 - `universal machine learning force field open source`
@@ -64,6 +66,7 @@ materials/apps/<model-name>/
 See [reference.md](reference.md) for the complete annotated template.
 
 Key decisions:
+
 - **Sync vs Async**: Use `@modal.asgi_app()` with direct return for jobs < 5 min. Use webhook pattern (return 202, spawn compute, POST result) for longer jobs.
 - **GPU**: Choose based on model size — `T4` for small models, `L4` for medium, `A100` for large
 - **Image**: Start with `modal.Image.debian_slim()` for CPU-only or `modal.Image.from_registry("nvidia/cuda:...")` for GPU
@@ -72,8 +75,7 @@ Key decisions:
 
 - [ ] Accept Ouro headers: `ouro-route-id`, `ouro-action-id`, `ouro-route-org-id`, `ouro-route-team-id`
 - [ ] For async jobs: also accept `ouro-webhook-url`, `ouro-webhook-token`
-- [ ] Decorate endpoints with `@ouro_field("x-ouro-output-asset-type", "file"|"post")`
-- [ ] Decorate endpoints with `@ouro_field("x-ouro-output-file-extension", "cif"|"zip"|...)`
+- [ ] Decorate endpoints with `@ouro_field("x-ouro-output-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})`
 - [ ] If accepting file input: `@ouro_field("x-ouro-input-asset-type", "file")` and `@ouro_field("x-ouro-input-file-extension", "cif"|...)`
 - [ ] Use `get_custom_openapi(web_app, get_openapi)` for OpenAPI schema
 - [ ] Return file output as base64 with Ouro file metadata
@@ -120,6 +122,7 @@ class File(BaseModel):
 ```
 
 Download the file from `file.url`, normalizing localhost URLs for prod:
+
 ```python
 supabase_url = os.getenv("SUPABASE_URL")
 file_url = file_url.replace("http://localhost:54321", supabase_url)
@@ -161,9 +164,9 @@ modal run materials/apps/<model-name>/app.py
 
 Look at these in `materials/apps/` as working examples:
 
-| App | Pattern | Key Features |
-|-----|---------|-------------|
-| `mattergen/app.py` | Sync ASGI + GPU | Generation from text params, zip/cif output, symmetry correction |
-| `mcae-predictor/abacus/modal_app.py` | Async webhook + spawn | CIF file input, long compute, webhook callback, progress logging |
-| `electron-density/modal_app.py` | Standalone function | Simple CIF input, volume storage, no FastAPI |
-| `materials/app.py` | Webapp + separate compute | Routes that spawn remote Modal functions |
+| App                                  | Pattern                   | Key Features                                                     |
+| ------------------------------------ | ------------------------- | ---------------------------------------------------------------- |
+| `mattergen/app.py`                   | Sync ASGI + GPU           | Generation from text params, zip/cif output, symmetry correction |
+| `mcae-predictor/abacus/modal_app.py` | Async webhook + spawn     | CIF file input, long compute, webhook callback, progress logging |
+| `electron-density/modal_app.py`      | Standalone function       | Simple CIF input, volume storage, no FastAPI                     |
+| `materials/app.py`                   | Webapp + separate compute | Routes that spawn remote Modal functions                         |
