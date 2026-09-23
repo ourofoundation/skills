@@ -106,8 +106,7 @@ def serve():
         summary="<Endpoint summary>",
         description="<Endpoint description>",
     )
-    @ouro_field("x-ouro-input-asset-type", "file")
-    @ouro_field("x-ouro-input-file-extension", "cif")
+    @ouro_field("x-ouro-input-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})
     @ouro_field("x-ouro-output-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})
     async def predict(
         request: PredictRequest,
@@ -283,8 +282,7 @@ class WebApp:
 
     def setup_routes(self):
 
-        @ouro_field("x-ouro-input-asset-type", "file")
-        @ouro_field("x-ouro-input-file-extension", "cif")
+        @ouro_field("x-ouro-input-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})
         @self.web_app.post(
             "/<model>/compute",
             summary="<Summary>",

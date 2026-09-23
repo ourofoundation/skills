@@ -76,7 +76,7 @@ Key decisions:
 - [ ] Accept Ouro headers: `ouro-route-id`, `ouro-action-id`, `ouro-route-org-id`, `ouro-route-team-id`
 - [ ] For async jobs: also accept `ouro-webhook-url`, `ouro-webhook-token`
 - [ ] Decorate endpoints with `@ouro_field("x-ouro-output-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})`
-- [ ] If accepting file input: `@ouro_field("x-ouro-input-asset-type", "file")` and `@ouro_field("x-ouro-input-file-extension", "cif"|...)`
+- [ ] If accepting file input: `@ouro_field("x-ouro-input-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})`, keyed by the request body field that receives the file
 - [ ] Use `get_custom_openapi(web_app, get_openapi)` for OpenAPI schema
 - [ ] Return file output as base64 with Ouro file metadata
 - [ ] For async: send webhook with status, action_id, route_id, and response
