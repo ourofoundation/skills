@@ -80,6 +80,7 @@ Key decisions:
 - [ ] If accepting file input: `@ouro_field("x-ouro-input-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})`, keyed by the request body field that receives the file
 - [ ] Use `get_custom_openapi(web_app, get_openapi)` for OpenAPI schema
 - [ ] Return file output as base64 with Ouro file metadata
+- [ ] Don't create a post per run by default. Public posts are announced in the team feed, and the action already links a run's output files. If a write-up is useful, put it behind a request flag (e.g. `include_report: bool = False`) and declare the post output `"optional": True`
 - [ ] For async: send webhook with status, action_id, route_id, and response
 - [ ] Log progress via `Action` model: `action.log("message")`, `action.log("error", level="error")`
 - [ ] Add `"ouro-py"` to image pip_install
