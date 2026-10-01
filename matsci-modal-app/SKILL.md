@@ -75,6 +75,7 @@ Key decisions:
 
 - [ ] Accept Ouro headers: `ouro-route-id`, `ouro-action-id`, `ouro-route-org-id`, `ouro-route-team-id`
 - [ ] For async jobs: also accept `ouro-webhook-url`, `ouro-webhook-token`
+- [ ] If the route is priced per second: accept `ouro-max-billable-seconds` (the run's billing budget) and stop or reject jobs that can't finish within it; optionally report the run's own billable time, as `usage.seconds` in the completion webhook or, for a sync route, in an `ouro-billable-seconds` response header (it can only lower the charge)
 - [ ] Decorate endpoints with `@ouro_field("x-ouro-output-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})`
 - [ ] If accepting file input: `@ouro_field("x-ouro-input-assets", {"file": {"asset_type": "file", "primary": True, "file_extensions": ["cif"]}})`, keyed by the request body field that receives the file
 - [ ] Use `get_custom_openapi(web_app, get_openapi)` for OpenAPI schema
