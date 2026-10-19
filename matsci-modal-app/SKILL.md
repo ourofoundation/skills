@@ -82,6 +82,7 @@ Key decisions:
 - [ ] Use `get_custom_openapi(web_app, get_openapi)` for OpenAPI schema
 - [ ] Return file output as base64 with Ouro file metadata
 - [ ] Don't create a post per run by default. Public posts are announced in the team feed, and the action already links a run's output files. If a write-up is useful, put it behind a request flag (e.g. `include_report: bool = False`) and declare the post output `"when": {"include_report": True}` (files that go into it get `"embedded_in": "report"`). Use `when` for any output a request field switches on; `"optional": True` only means the results may not produce it
+- [ ] Give each output a `"role"` when the default is wrong. Outputs of a run with an input are `result`s of it (phonons, a phase diagram, predicted properties). Use `"version"` for the input improved (a relaxed or symmetrized CIF), `"supporting"` for intermediate or raw files (a trajectory, a supercell, logs), `"new"` for a standalone asset (a generated structure, a CIF predicted from a pattern). See https://ouro.foundation/guides/route-input-output-assets#say-what-each-output-is
 - [ ] For async: send webhook with status, action_id, route_id, and response
 - [ ] Log progress via `Action` model: `action.log("message")`, `action.log("error", level="error")`
 - [ ] Add `"ouro-py"` to image pip_install
