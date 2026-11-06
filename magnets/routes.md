@@ -14,10 +14,10 @@ Ouro MCP server or the `ouro` Python package, by the **id** below:
 - `search_assets(asset_type="route", query=...)` finds a route not listed.
 
 Send only the parameters you mean to change. Ids and prices were checked on
-2026-10-31; `get_asset` shows the current price.
+2026-11-06; `get_asset` shows the current price.
 
-Price tiers: **free**; **$/s** billed per second of compute; **paid**
-pay-per-use at the price `get_asset` shows. "DFT" means an ABACUS run that
+Price tiers: **free**, or **$/s** billed per second of compute (held up
+front at the run's maximum and settled on actual runtime). "DFT" means an ABACUS run that
 takes minutes to hours.
 
 ## Structures in
@@ -36,11 +36,11 @@ takes minutes to hours.
 | `mmoderwell/explore-a-chemical-system-with-ggen` | `25945f7c-d83a-45ba-8c40-30b69d9a3df7` | generate + relax across a system's stoichiometries, rank by hull | 15 to 60 min, async | $0.0012/s |
 | `mmoderwell/scout-candidate-elements-with-ggen` | `4623c347-ec8b-4516-81eb-c989cbf5c940` | screen elements X for a template such as Fe-Co-{X} | minutes, async | $0.0012/s |
 | `mmoderwell/generate-a-crystal-structure-using-ggen` | `454b4729-839e-494a-9ea5-ae3eab07570b` | one structure for an exact formula | minutes | $0.0012/s |
-| `mmoderwell/generate-crystal-structures-with-mattergen-and-magnetic-density-conditioning` | `1126f5a0-bc42-4a76-a51d-ca9a903fcc06` | MatterGen samples biased toward a target magnetic density | minutes | paid |
-| `mmoderwell/generate-crystal-structures-with-mattergen-magnetic-density-and-hhi-score-conditioning` | `f156d895-242d-4fa5-b65b-fa8f08deb755` | the same, steered toward a safer supply chain too | minutes | paid |
+| `mmoderwell/generate-crystal-structures-with-mattergen-and-magnetic-density-conditioning` | `1126f5a0-bc42-4a76-a51d-ca9a903fcc06` | MatterGen samples biased toward a target magnetic density | minutes | free |
+| `mmoderwell/generate-crystal-structures-with-mattergen-magnetic-density-and-hhi-score-conditioning` | `f156d895-242d-4fa5-b65b-fa8f08deb755` | the same, steered toward a safer supply chain too | minutes | free |
 | `mmoderwell/generate-point-defect-candidates` | `a8420297-143c-4cd3-8cc0-9a23db6b9efd` | vacancies, substitutions, interstitials from a host | async | free |
-| `mmoderwell/create-an-interstitially-doped-structure` | `be1c9062-9c73-4c56-a91f-6fbbbcad6d4f` | an interstitial dopant at a concentration | | paid |
-| `hermes/expand-a-crystal-structure-into-a-supercell` | `0bd98417-bc11-43e6-a67e-f301d57035cc` | supercell CIF | | paid |
+| `mmoderwell/create-an-interstitially-doped-structure` | `be1c9062-9c73-4c56-a91f-6fbbbcad6d4f` | an interstitial dopant at a concentration | | free |
+| `hermes/expand-a-crystal-structure-into-a-supercell` | `0bd98417-bc11-43e6-a67e-f301d57035cc` | supercell CIF | | free |
 
 GGen explore body: `system` ("Fe-Co-B"), `max_atoms`, `num_trials`,
 `e_above_hull`, `crystal_systems`, `min_fraction` / `max_fraction`,
@@ -65,7 +65,7 @@ read, so label Wyckoff sites geometrically, never by index across files.
 | Route | id | What | Price |
 |---|---|---|---|
 | `mmoderwell/relax-a-structure-and-return-a-magcif-with-ground-state-moments` | `b9593f22-3520-4439-ac88-f0931de9fd19` | Prophet relax (positions and cell), then a collinear order screen; outputs a P1 magCIF with the lowest ordering's moments. Body: `fmax` 0.05, `max_steps` 300, `relax_cell` true | free |
-| `mmoderwell/relax-a-crystal-structure` | `d040d3b6-faad-40cf-9d7c-999a5c769ed8` | ML-potential relax with Orb, MACE or CHGNet, async | paid |
+| `mmoderwell/relax-a-crystal-structure` | `d040d3b6-faad-40cf-9d7c-999a5c769ed8` | ML-potential relax with Orb, MACE or CHGNet, async | free |
 | `mmoderwell/structure-relaxation-via-nequip-oam-xl` | `cac67dd7-4ca4-40bf-aa8a-51c51692681f` | NequIP-OAM-XL relax | $0.0009/s |
 | `mmoderwell/dft-structure-relaxation` | `d180f520-fc88-48b7-9eca-3d123f5cf680` | DFT (ABACUS) variable-cell relax; `basis_size` DZP by default, pass `"TZDP"` for headline cells | $0.0006/s |
 
@@ -103,14 +103,14 @@ accept the magCIF as is.
 
 | Property | Route | id | Price | Notes |
 |---|---|---|---|---|
-| Hull distance | `mmoderwell/calculate-energy-above-the-convex-hull` | `75fe7f4b-22f5-4883-aa1d-378fd42da47c` | paid, async | input `structure`, relaxed (max force ≤ 0.05 eV/Å) unless `allow_unrelaxed: true`. `energy_surface` Orb v3 by default; the PBE option scores your cell with Orb against published PBE references, so the two surfaces differ by up to 20 meV/atom. Quote both. `include_phase_diagram: true` returns the neighbors as a file |
+| Hull distance | `mmoderwell/calculate-energy-above-the-convex-hull` | `75fe7f4b-22f5-4883-aa1d-378fd42da47c` | free, async | input `structure`, relaxed (max force ≤ 0.05 eV/Å) unless `allow_unrelaxed: true`. `energy_surface` Orb v3 by default; the PBE option scores your cell with Orb against published PBE references, so the two surfaces differ by up to 20 meV/atom. Quote both. `include_phase_diagram: true` returns the neighbors as a file |
 | Dynamic stability | `mmoderwell/check-phonon-stability` | `69fc4538-ff58-42fd-a881-9ede1801a6f3` | $0.0009/s | 50 to 130 s for 9 to 18 atoms. Reproduces the PBE result on DFT-relaxed Fe2P. It flagged a made compound with site disorder unstable while its ordered relatives passed, so in a disordered family an imaginary mode is a flag to check, not a rejection |
-| Phonon bands | `mmoderwell/calculate-phonon-dispersion-and-band-structure` | `c4d7aa14-f5a7-496e-93a5-542e09482eb5` | paid, async | |
+| Phonon bands | `mmoderwell/calculate-phonon-dispersion-and-band-structure` | `c4d7aa14-f5a7-496e-93a5-542e09482eb5` | free, async | |
 | Raw-material cost | `hermes/estimate-raw-material-cost-per-kg` | `9028cd75-e8ee-4f0a-bf41-c360f64cb8ad` | free | Nd2Fe14B 15.69 $/kg on this route (2019 prices); Fe2(P,Si) 0.88 |
 | Supply risk | `will/score-a-composition-or-cif` | `5e31766b-278b-42e5-9cad-b7351db4cd2d` | free | HHI and cost per kg |
-| Moments, Ms (ML) | `hermes/estimate-magnetic-moments-and-ms-from-a-cif` | `d1fdf6d1-2b35-47af-956f-1b83c2fca036` | paid | CHGNet, unsigned moments, assumes collinear FM: antiferromagnetic Mn compounds look high |
+| Moments, Ms (ML) | `hermes/estimate-magnetic-moments-and-ms-from-a-cif` | `d1fdf6d1-2b35-47af-956f-1b83c2fca036` | free | CHGNet, unsigned moments, assumes collinear FM: antiferromagnetic Mn compounds look high |
 | Moments, Ms (ligand-bridged) | `mmoderwell/magnetic-moment-ms-for-ligand-bridged-magnets-oxides-nitrides-mxm` | `091f9f57-f11d-40d0-9fe4-590c05a756e7` | free | oxides, nitrides, M–X–M exchange |
-| Curie (ML, CHGNet + CatBoost) | `hermes/predict-curie-temperature-from-a-cif` | `daf42af4-a3e4-4f9e-af65-6ecaafc26334` | paid | recall of its training table for known compounds; see calibration.md |
+| Curie (ML, CHGNet + CatBoost) | `hermes/predict-curie-temperature-from-a-cif` | `daf42af4-a3e4-4f9e-af65-6ecaafc26334` | free | recall of its training table for known compounds; see calibration.md |
 | Ground state (DFT) | `mmoderwell/ground-state-scf` | `e4ed9888-0c34-4a9d-a227-02fa9d7521e0` | $0.0003/s | energy, magnetization, site moments; seed orderings with `initial_magmoms` |
 | Moments, Ms (DFT) | `mmoderwell/magnetic-moments` | `0a23817e-af47-485a-9c56-5f2df0178b80` | $0.0003/s | total and site moments, Ms; records whatever FM state it lands in |
 | Magnetic order (DFT) | `mmoderwell/magnetic-ordering-fm-vs-afm` | `67393536-da30-4983-9c21-37c9fabbb296` | $0.0012/s | one SCF per ordering. With three magnetic species and `ferrimagnetic_by_species` it enumerated 40 configurations (~$7); use the default strategies, or seed two or three orderings on the ground-state route for ~$0.10 |

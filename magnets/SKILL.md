@@ -30,7 +30,7 @@ on any one of them. Targets, with the route that measures each:
 | Magnetization Js | ≥ 1 T, ferromagnetic, aim for 1.6 (Nd2Fe14B 1.6) | magnetic-moments (DFT) after a Prophet order screen | DFT |
 | Hardness κ = √(K1 / μ0 Ms²) | > 1 means the magnet can be shaped freely; 0.5 to 1 still works as a bulk magnet | derived | |
 | Curie temperature | > 550 K for use above room temperature | Prophet Curie (rank only) | free |
-| Stable | ≤ 25 meV/atom above the hull for a bulk phase; up to ~75 for a metastable or film phase | calculate-energy-above-the-convex-hull, both surfaces | paid |
+| Stable | ≤ 25 meV/atom above the hull for a bulk phase; up to ~75 for a metastable or film phase | calculate-energy-above-the-convex-hull, both surfaces | free |
 | Dynamically stable | no imaginary phonon modes | check-phonon-stability | $0.05 to 0.11 |
 | Affordable | raw cost under Nd2Fe14B's 15.7 $/kg on the cost route | estimate-raw-material-cost-per-kg | free |
 | Makeable | a line compound with its own structure type beats an ordered arrangement of a solid solution | judgment | |
