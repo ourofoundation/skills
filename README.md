@@ -6,6 +6,7 @@ Reusable AI agent skills for building on the Ouro platform. Each skill teaches a
 
 | Skill | Description |
 |-------|-------------|
+| [magnets](magnets/) | How to search for permanent magnets with Ouro's models: the targets, the cheap-to-expensive funnel of routes, their calibration against measured magnets, the traps that waste DFT money, and the structure families already mapped. |
 | [matsci-modal-app](matsci-modal-app/) | Build Modal apps for open-source materials science AI models with Ouro integration. Covers model discovery, Modal deployment, file I/O, webhook callbacks, and action logging. |
 
 ## How It Works
@@ -29,6 +30,12 @@ Install any skill using the [skills CLI](https://skills.sh/docs):
 
 ```bash
 npx skills add ourofoundation/skills
+```
+
+Or one skill at a time:
+
+```bash
+npx skills add ourofoundation/skills --skill magnets
 ```
 
 ### Cursor
